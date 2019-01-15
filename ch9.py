@@ -219,6 +219,7 @@ while text != "quit":
     text = input("Please enter a chemical formula (or 'quit' to exit): ") 
     if text == "quit":
         print("...exiting program") 
+        break
     elif text == "H2O":
         print("Water") 
     elif text == "NH3":
@@ -253,3 +254,130 @@ for i in range(len(s)):
 
 print(total)
 print(count)
+
+# Chapter 9 exercises
+
+# 1. Write a for loop to print all the values in the celegans_phenotypes list from Slicing Lists, on page 137, one per line. celegans_phenotypes refers to ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma'].
+
+celegans_phenotypes = ['Emb', 'Him', 'Unc', 'Lon', 'Dpy', 'Sma']
+for phenotype in celegans_phenotypes:
+    print(phenotype)
+
+# 2. Write a for loop to print all the values in the half_lives list from Operations on Lists, on page 135, all on a single line. half_lives refers to [87.74, 24110.0, 6537.0, 14.4, 376000.0].
+
+half_lives = [87.74, 24110.0, 6537.0, 14.4, 376000.0]
+for value in half_lives:
+    print(value, end=' ')
+
+# 3. Write a for loop to add 1 to all the values from whales from Storing and Accessing Data in Lists, 
+# on page 129, and store the converted values in a new list called more_whales. 
+# The whales list shouldn’t be modified. whales refers to [5,4,7,3,2,3,2,6,4,2,1,7,1,3].
+
+
+whales = [5,4,7,3,2,3,2,6,4,2,1,7,1,3]
+more_whales = []
+for count in whales:
+    more_whales.append(count + 1)
+    print(more_whales)
+
+# 4. In this exercise, you’ll create a nested list and then write code that per- forms operations on that list. /// a, b, c
+
+alkaline_earth_metals = [[4, 9.012], [12, 24.305], [20, 40.078], [38, 87.62], [56, 137.327], [88, 226]]
+
+for inner_list in alkaline_earth_metals:
+    print(inner_list[0])
+    print(inner_list[1])
+
+number_and_weight = []
+for inner_list in alkaline_earth_metals:
+    number_and_weight.append(inner_list[0])
+    number_and_weight.append(inner_list[1])
+
+# 5. The following function doesn’t have a docstring, type annotations, or comments. Write enough of all three to make it easy for another programmer to
+# understand what the function does and how, and then compare your solution with those of at least two other people. How similar are they? Why do they differ?
+
+def mystery_function(values): 
+    """ (list) -> list
+    Return a copy of the list, values, and the sublists it contains.
+    The top - level sublists have their elements reversed in the returned
+    list.
+    >>> mystery_function([[1, 2, 3], [4, 5, 6]])
+    [[3, 2, 1], [6, 5, 4]]
+    """ 
+    result = []
+    for sublist in values:
+        # Copy the sublist in reverse order by inserting each
+        # # element to the front of the new sublist.
+        result.append([sublist[0]])
+        for i in sublist[1:]:
+            result[-1].insert(0, i)
+        
+    return result
+
+print(values)
+
+# 6. In Repetition Based on User Input, on page 162, you saw a loop that prompted users until they typed quit. 
+# This code won’t work if users type Quit, or QUIT, or any other version that isn’t exactly quit. 
+# Modify that loop so that it terminates if a user types that word with any capitalization.
+
+
+text = ""
+while text != "quit":
+    text = input("Please enter a chemical formula (or 'quit' to exit): ") 
+    if text.lower() == "quit":
+        print("...exiting program")
+        break
+    elif text == "H2O":
+        print("Water") 
+    elif text == "NH3":
+        print("Ammonia") 
+    elif text == "CH4":
+        print("Methane") 
+    else:
+        print("Unknown compound")
+
+
+# 7. Consider the following statement, which creates a list of populations of countries in eastern Asia (China, DPR Korea, Hong Kong, Mongolia, 
+# Republic of Korea, and Taiwan) in millions: country_populations = [1295, 23, 7, 3, 47, 21]. 
+# Write a for loop that adds up all the values and stores them in variable total. 
+# 
+# (Hint: Give total an initial value of zero, and, inside the loop body, add the population of the current country to total.)
+
+
+
+total = 0
+country_populations = [1295, 23, 7, 3, 47, 21] 
+for population in country_populations:
+    total += population
+
+print("The total populations is", total)
+
+
+
+
+
+# 8. You are given two lists, rat_1 and rat_2, 
+# that contain the daily weights of two rats over a period of ten days. 
+# Assume the rats never have exactly the same weight. Write statements to do the following:
+
+rat_1 = [100, 110, 100]
+rat_2 = [90, 100, 110]
+# a
+
+if rat_1[0] > rat_2[0]:
+    print("Rat 1 weighed more than rat 2 on day 1.")
+else:
+    print("Rat 1 weighed less than rat 2 on day 1.")
+    
+# b
+
+if rat_1[0] > rat_2[0] and rat_1[2] > rat_2[2]:
+    print("Rat 2 became heavier than Rat 1.")
+
+# c
+
+if rat_1[0] > rat_2[0]:
+    if rat_1[2] > rat_2[2]:
+        print("Rat 1 remained heavier than Rat 2.")
+    else:
+        print("Rat 2 became heavier than Rat 1.")
