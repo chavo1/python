@@ -381,3 +381,5 @@ if rat_1[0] > rat_2[0]:
         print("Rat 1 remained heavier than Rat 2.")
     else:
         print("Rat 2 became heavier than Rat 1.")
+
+        
