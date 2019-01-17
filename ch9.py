@@ -382,4 +382,84 @@ if rat_1[0] > rat_2[0]:
     else:
         print("Rat 2 became heavier than Rat 1.")
 
-        
+# 9. Print the numbers in the range 33 to 49 (inclusive).
+
+numbers = [i for i in range(33,50)]
+print(numbers)
+
+# 10. Print the numbers from 1 to 10 (inclusive) in descending order, all on one line.
+
+numbers = [i for i in reversed(range(1,11))]
+
+print(numbers)
+
+# 11. Using a loop, sum the numbers in the range 2 to 22 (inclusive), and then calculate the average.
+
+sum = 0
+count = 0
+for number in range(2,23):
+    sum += number
+    count += 1
+
+average = sum / count
+
+print(number)
+print(average)
+
+# 12. remove negative ([1, 2, 3, -3, 6, -1, -3, 1]) 
+
+num_list = [1, 2, 3, -3, 6, -1, -3, 1]
+
+num_list = [num for num in num_list if num > 0]
+
+print(num_list)
+
+# while loop 
+
+num_list1 = [1, 2, 3, -3, 6, -1, -3, 1]
+x = 0
+while x < len(num_list1):
+  if num_list1[x] < 0:
+    num_list1.remove(num_list1[x])
+    continue
+  x += 1
+
+print("while loop list1: ", num_list1)
+
+# while loop 1
+
+num_list2 = [1, 2, 3, -3, 6, -1, -3, 1]
+x = 0
+while x < len(num_list2):
+    if num_list2[x] < 0:
+        del num_list2[x]
+    else:
+        x += 1
+    
+print("while loop list2: ", num_list2)
+
+
+# 13. Using nested for loops, print a right triangle of the character T on the screen where the triangle is 
+# one character wide at its narrowest point and seven characters wide at its widest point:
+
+for width in range(1, 8):
+    print('T' * width)
+
+# 14. Using nested for loops, print the triangle described in the previous exercise with its hypotenuse on the left side:
+
+for width in range(1, 8):
+    print(' ' * (7 - width), 'T' * width, sep='')
+
+# 15. Redo the previous two exercises using while loops instead of for loops.
+
+width = 1
+while width < 8:
+    print('T' * width)
+    width += 1
+
+
+width = 1
+while width < 8:
+    print(' ' * (7 - width), 'T' * width, sep='')
+    width += 1
+
