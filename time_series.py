@@ -35,3 +35,5 @@ def process_file(reader: TextIO) -> None:
 if __name__ == '__main__':
     with open('file_examples/hopedale.txt', 'r') as input_file:
         process_file(input_file)
+
+       
