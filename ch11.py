@@ -285,8 +285,125 @@ for bird in bird_to_observations:
 
 scientist_to_birthdate = {'Newton' : 1642, 'Darwin' : 1809,
  'Turing' : 1912}
-
 print (scientist_to_birthdate.keys())
-
 print (scientist_to_birthdate.values())
+print (scientist_to_birthdate.items())
+print (scientist_to_birthdate.get('Newton'))
+print (scientist_to_birthdate.get('Curie', 1867))
+print (scientist_to_birthdate)
 
+researcher_to_birthdate = {'Curie' : 1867, 'Hopper' : 1906, 
+'Franklin' : 1920}
+scientist_to_birthdate.update(researcher_to_birthdate)
+print (scientist_to_birthdate)
+print (researcher_to_birthdate)
+print (researcher_to_birthdate.clear())
+print (researcher_to_birthdate)
+###############
+# loop over the scientists and their birth years:
+###############
+scientist_to_birthdate = {'Newton' : 1642, 'Darwin' : 1809, 'Turing' : 1912}
+for scientist, birthdate in scientist_to_birthdate.items(): 
+    print(scientist, 'was born in', birthdate)
+
+# Each time we read an observation from a file, 
+# we check to see whether we have encountered that bird before—that is,
+#  whether the bird is already a key in our dictionary.
+
+from typing import TextIO, Dict
+from io import StringIO
+def count_birds(observations_file: TextIO) -> Dict[str, int]:
+    """Return a set of the bird species listed in observations_file, which has
+    one bird species per line.
+    >>> infile = StringIO('bird 1\\nbird 2\\nbird 1\\n')
+    >>> count_birds(infile)
+    {'bird 1': 2, 'bird 2': 1}
+    """
+    bird_to_observations = {}
+    for line in observations_file:
+        bird = line.strip()
+        if bird in bird_to_observations:
+            bird_to_observations[bird] = bird_to_observations[bird] + 1
+        else:
+            bird_to_observations[bird] = 1
+
+    return bird_to_observations
+    
+if __name__ == '__main__':
+    with open('file_examples/observations.txt') as observations_file:
+        bird_to_observations = count_birds(observations_file)
+        for bird, observations in bird_to_observations.items():
+            print(bird, observations)
+
+# The function body can be shortened by using the method dict.get, which saves three lines.
+
+def count_birds(observations_file: TextIO) -> Dict[str, int]:
+    """Return a set of the bird species listed in observations_file, which has one bird species per line.
+    >>> infile = StringIO('bird 1\\nbird 2\\nbird 1\\n')
+    >>> count_birds(infile)
+    {'bird 1': 2, 'bird 2': 1}
+    """
+    bird_to_observations = {}
+    for line in observations_file:
+        bird = line.strip()
+        bird_to_observations[bird] = bird_to_observations.get(bird, 0) + 1
+
+    return bird_to_observations
+
+if __name__ == '__main__':
+    with open('file_examples/observations.txt') as observations_file:
+        bird_to_observations = count_birds(observations_file)
+        for bird, observations in bird_to_observations.items():
+            print(bird, observations)
+
+# Inverting a Dictionary // You might want to print the birds in another order
+
+print (bird_to_observations)
+
+# Invert the dictionary
+observations_to_birds_list = {}
+for bird, observations in bird_to_observations.items():
+    if observations in observations_to_birds_list:
+        observations_to_birds_list[observations].append(bird)
+    else:
+        observations_to_birds_list[observations] = [bird]
+
+print (observations_to_birds_list)
+    
+
+# Print the inverted dictionary
+
+observations_sorted = sorted(observations_to_birds_list.keys())
+
+for observations in observations_sorted:
+    print(observations, ':', end=" ")
+    for bird in observations_to_birds_list[observations]:
+        print(' ', bird, end=" ")
+        print()
+
+# Using the in Operator on Tuples, Sets, and Dictionaries
+
+odds = set([1, 3, 5, 7, 9])
+print (9 in odds)
+print (8 in odds)
+print ('9' in odds)
+evens = (0, 2, 4, 6, 8)
+print (4 in evens)
+print (11 in evens)
+
+# When used on a dictionary, in checks whether a value is a key in the dictionary:
+
+bird_to_observations = {'canada goose': 183, 'long-tailed jaeger': 71, 'snow goose': 63, 'northern fulmar': 1}
+
+print ('snow goose' in bird_to_observations)
+print (183 in bird_to_observations)
+
+# Creating New Type Annotations
+
+def read_molecule(reader: TextIO) -> list:
+    """Read a single molecule from reader and return it, or return None to signal end of file. The first item in the result is the name of the compound; each list contains an atom type and the X, Y, and Z coordinates of that atom.
+    >>> instring = 'COMPND TEST\\nATOM 1 N 0.1 0.2 0.3\\nATOM 2 N 0.2 0.1 0.0\\nEND\\n'
+    >>> infile = StringIO(instring)
+    >>> read_molecule(infile)
+    ['TEST', ['N', '0.1', '0.2', '0.3'], ['N', '0.2', '0.1', '0.0']]
+    """
