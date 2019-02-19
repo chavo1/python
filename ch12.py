@@ -195,6 +195,7 @@ print (find_two_smallest([-2, 4, 3, 2, 5, 6, -1]))
 
 
 # 6
+import time
 def dutch_flag(flag):
   red_counter = 0
   index = 0
