@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import time
 import linear_search_1
 import linear_search_2
