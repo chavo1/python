@@ -198,3 +198,147 @@ jen = Student('Jen Campbell', 'Toronto', 'campbell@cs.toronto.edu', '4321')
 print(jen.name)
 print(jen.email)
 print(jen.student_number)
+
+
+# Class Molecule
+
+from atom import Atom
+class Molecule:
+    """A molecule with a name and a list of Atoms. """
+
+    def __init__(self, name):
+        """ (Molecule, str) -> NoneType
+		
+        Create a Molecule named name with no Atoms.
+        """
+
+        self.name = name
+        self.atoms = []
+
+    def add(self, a):
+        """ (Molecule, Atom) -> NoneType
+		
+        Add a to my list of Atoms.
+        """
+
+        self.atoms.append(a)
+
+    def translate(self, x, y, z):
+        """ (Molecule, number, number, number) -> NoneType
+
+        Move this Molecule, including all Atoms, by (x, y, z).
+        """
+
+        for atom in self.atoms:
+            atom.translate(x, y, z)
+
+    def __str__(self):
+        """ (Molecule) -> str
+		
+        Return a string representation of this Molecule in this format:
+            (NAME, (ATOM1, ATOM2, ...))
+        """
+
+        res = ''
+        for atom in self.atoms:
+            res = res + str(atom) + ', '
+			
+        # Strip off the last comma.
+        res = res[:-2]
+        return '({0}, ({1}))'.format(self.name, res)
+
+    def __repr__(self):
+        """ (Molecule) -> str
+
+        Return a string representation of this Molecule in this format:
+          Molecule("NAME", (ATOM1, ATOM2, ...))
+        """
+
+        res = ''
+        for atom in self.atoms:
+            res = res + repr(atom) + ', '
+			
+        # Strip off the last comma.
+        res = res[:-2]
+        return 'Molecule("{0}", ({1}))'.format(self.name, res)
+
+
+if __name__ == '__main__':
+    ammonia = Molecule("AMMONIA")
+    ammonia.add(Atom(1, "N", 0.257, -0.363, 0.0))
+    ammonia.add(Atom(2, "H", 0.257, 0.727, 0.0))
+    ammonia.add(Atom(3, "H", 0.771, -0.727, 0.890))
+    ammonia.add(Atom(4, "H", 0.771, -0.727, -0.890))
+    ammonia.translate(0, 0, 0.2)
+    assert ammonia.atoms[0].center[0] == 0.257
+    assert ammonia.atoms[0].center[1] == -0.363
+    assert ammonia.atoms[0].center[2] == 0.2
+    print(repr(ammonia))
+    print(ammonia)
+
+
+# Exercises
+
+# Task1
+
+class Country:
+    def __init__(self, name, population, area):
+        """ (Country, str, int, int)
+        A new Country named name with population people and area area.
+        >>> canada = Country('Canada', 34482779, 9984670)
+        >>> canada.name
+        'Canada'
+        >>> canada.population
+        34482779
+        >>> canada.area
+        9984670
+        """   
+        self.name = name
+        self.population = population
+        self.area = area
+    def is_larger(self, other):
+        """ (Country, Country) -> bool
+        
+        Return whether this country is larger than other.
+        >>> canada = Country('Canada', 34482779, 9984670)
+        >>> usa = Country('United States of America', 313914040, 9826675)
+        >>> canada.is_larger(usa)True>>> usa.is_larger(canada)False
+        """ 
+        
+        return self.area > other.area
+
+
+    def population_density(self):
+        """ (Country) -> float
+        Return the population density of this country.
+        >>> canada = Country('Canada', 34482779, 9984670)
+        >>> canada.population_density()
+        3.4535722262227995
+        """
+        return self.population / self.area
+
+    def __str__(self):
+        """ (Country) -> str
+        Return a printable representation of this country.
+        >>> usa = Country('United States of America', 313914040, 9826675)
+        >>> print(usa)United States of America has a population of 313914040 and is 9826675 
+        square km.
+        """ 
+        return '{} has a population of {} and is {} square km.'.format(
+            self.name, self.population, self.area)
+
+    def __repr__(self):
+        """ (Country) -> strReturn a concise representation of this country.
+        >>> canada = Country('Canada', 34482779, 9984670)
+        >>> canadaCountry('Canada', 34482779, 9984670)
+        >>> [canada]
+        "34482779, 9984670)":http://pragprog.com/wikis/wiki/Country('Canada',
+        """ 
+        return "Country('{0}', {1}, {2})".format(
+            self.name, self.population, self.area)
+
+    if __name__ == '__main__': 
+        import doctest
+        print(doctest.testmod())
+
+# Task 2
