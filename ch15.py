@@ -70,3 +70,4 @@ def double_preceding(values: List[float]) -> None:
         for i in range(1, len(values)):
             values[i] = 2 * temp
             temp = values[i]
+
