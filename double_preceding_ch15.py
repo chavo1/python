@@ -20,9 +20,13 @@ def double_preceding(values: List[float]) -> None:
     if values != []:
         temp = values[0]
         values[0] = 0
+        # for i in range(1, len(values)):
+        #         values[i] = 2 * temp
+        #         temp = values[i]
         for i in range(1, len(values)):
-            values[i] = 2 * temp
+            double = 2 * temp
             temp = values[i]
+            values[i] = double
 
 class TestDoublePreceding(unittest.TestCase):
     """Tests for double_preceding."""
