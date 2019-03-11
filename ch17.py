@@ -137,3 +137,78 @@ WHERE (PopByRegion.Region = PopByCountry.Region)
 AND ((PopByCountry.Population * 1.0) / PopByRegion.Population > 0.10)''')
 
 print(cur.fetchall())
+
+
+
+# cur.execute('''
+# CREATE TABLE PopByCountry(
+# Region TEXT NOT NULL,
+# Country TEXT NOT NULL,
+# Population INTEGER NOT NULL,
+# CONSTRAINT CountryKey PRIMARY KEY (Region, Country))''')
+
+# Traceback (most recent call last):
+#   File "./ch17.py", line 146, in <module>
+#     CONSTRAINT CountryKey PRIMARY KEY (Region, Country))''')
+# sqlite3.OperationalError: table PopByCountry already exists
+
+
+# Advanced Features
+
+cur.execute('SELECT SUM (Population) FROM PopByRegion')
+
+print(cur.fetchone())
+
+# Grouping
+
+cur.execute('''SELECT Region, SUM (Population) FROM PopByCountry GROUP BY Region''')
+print(cur.fetchall())
+
+cur.execute('''SELECT SUM (Population) FROM PopByCountry WHERE Region = "North America"''')
+print(cur.fetchall())
+
+cur.execute('''SELECT SUM (Population) FROM PopByCountry WHERE Region = "Eastern Asia"''')
+print(cur.fetchall())
+
+# Self-Joins
+
+cur.execute('''SELECT Country FROM PopByCountry WHERE (ABS(Population - Population) < 1000)''')
+print(cur.fetchall())
+
+
+cur.execute('''
+SELECT A.Country, B.Country
+FROM PopByCountry A INNER JOIN PopByCountry B
+WHERE (ABS(A.Population - B.Population) <= 1000)
+AND (A.Country != B.Country)''')
+print(cur.fetchall())
+
+# Nested Queries
+
+
+# This result is wrong—Hong Kong has a projected population of 8,764,000, so eastern Asia shouldn’t 
+# have been returned. Because other countries in eastern Asia have populations that are not 8,764,000, 
+# though, eastern Asia was included in the final results.
+
+cur.execute('''SELECT DISTINCT Region FROM PopByCountry
+                   WHERE (PopByCountry.Population != 8764)''')
+
+print(cur.fetchall())
+
+# regions that have countries with a population of 8,764,000, as shown in the following code
+
+cur.execute('''
+SELECT DISTINCT Region
+FROM PopByCountry
+WHERE (PopByCountry.Population = 8764) ''')
+
+print(cur.fetchall())
+
+# Now we want to get the names of regions that were not in the results of our first query. To do this, we will use a WHERE condition and NOT IN:
+cur.execute(''' SELECT DISTINCT Region FROM PopByCountry WHERE Region NOT IN
+    (SELECT DISTINCT Region
+     FROM PopByCountry
+     WHERE (PopByCountry.Population = 8764))
+''')
+
+print(cur.fetchall())
